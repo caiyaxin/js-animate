@@ -1,0 +1,143 @@
+<html>
+<head>
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		#container{
+			width: 680px;
+			height: 344px;
+			margin: 50px auto;
+			position: relative;
+
+
+		}
+		#tab{
+			height: 20px;
+			right: 10px;
+			bottom: 10px;
+			position: absolute;
+		}
+		#tab li{
+			float: left;
+			margin-right: 5px;
+			width: 20px;
+			height: 20px;
+			text-align: center;
+			line-height: 20px;
+			color: #fff;
+			background: #000;
+		}
+		#imgs img{
+			display: none;
+		}
+		#imgs .selected{
+			display: block;
+		}
+		#tab .selected{
+			background: orange;
+		}
+		#arrow{
+			position: absolute;
+			left: 10px;
+			bottom: 10px;
+
+		}
+		#arrow span{
+			background: #000;
+			margin-right: 5px;
+			color: #fff;
+			float: left;
+			width: 20px;
+			height: 20px;
+			text-align: center;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<ul id="tab">
+			<li class="selected">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+		<div id="imgs">
+			<img class="selected" src="img/1.jpg">
+			<img src="img/2.jpg">
+			<img src="img/3.jpg">
+			<img src="img/4.jpg">
+
+		</div>
+		<div id="arrow">
+			<span id="prev">&lt;</span>
+			<span id="next">&gt;</span>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var oContainer = document.getElementById('container')
+		var oTab = document.getElementById('tab');
+		var aLi = document.getElementsByTagName('li');
+		var oImgs = document.getElementById('imgs');
+		var aImg = oImgs.getElementsByTagName('img');
+		var index = 0;//代表当前图片的索引
+		for(var i=0; i<aLi.length; i++){
+			aLi[i].index = i;
+			aLi[i].onmouseover =function  () {
+			changeImg(this.index);
+
+			};
+
+		}
+		function changeImg(index){
+		for(var i=0; i<aLi.length; i++){
+			aLi[i].className = "";
+			aImg[i].className = "";
+		}
+
+			aLi[index].className = 'selected';
+			aImg[index].className = 'selected';
+		}
+
+		var oPrev = document.getElementById('prev');
+		var oNext = document.getElementById('next');
+		oPrev.onclick = function  () {
+			index--;
+			if (index == -1) {
+				index = aLi.length - 1;
+			};
+			changeImg(index);
+			
+		};
+		oNext.onclick = function  () {
+			index++;
+			if (index == aLi.length) {
+				index = 0;
+			};
+			changeImg(index);
+			
+		};
+		var timer;
+		function play(){
+			timer = setInterval(function(){
+			oNext.onclick();
+			},2000);
+		}
+		play();
+		
+		oContainer.onmouseover = function(){
+			clearInterval(timer);
+		};
+		oContainer.onmouseout = function(){
+			play();
+		};
+	</script>
+
+</body>
+</html>

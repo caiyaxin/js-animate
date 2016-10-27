@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#small_box{
+			width: 100px;
+			height: 100px;
+			float: left;
+			position: relative;
+			left: 20px;
+			top: 20px;
+			overflow: hidden;
+		}
+		#small_box img{
+			width: 100px;
+
+		}
+		#big_box{
+			width: 200px;
+			height: 200px;
+			position: absolute;
+			left: 150px;
+			top: 20px;
+			display: none;
+			overflow: hidden;
+		}
+		#big_pic{
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		
+		#float_box{
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			background: #000;
+			opacity: 0.5;
+			top: 0;
+			left: 0;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="small_box">
+		<img src="商品9_160x160.jpg" alt="" id="small_pic">
+		<div id="float_box"></div>
+	</div>
+	<div id="big_box">
+		<img src="商品9.jpg" alt="" id="big_pic">
+	</div>
+	<script type="text/javascript">
+		var oSmallbox = document.getElementById('small_box');
+		var oBigbox = document.getElementById('big_box');
+		var oFloatbox = document.getElementById('float_box');
+		var oBigpic = document.getElementById('big_pic');
+		oSmallbox.onmouseover = function(){
+			oFloatbox.style.display = 'block';
+			oBigbox.style.display = 'block';
+		}
+		oSmallbox.onmouseout = function(){
+			oFloatbox.style.display = 'none';
+			oBigbox.style.display = 'none';
+		}
+		oFloatbox.onmousemove = function(e){
+			e = e || window.event;
+			var iTop = e.clientY - oSmallbox.offsetTop - oFloatbox.offsetHeight/2;
+			var iLeft = e.clientX - oSmallbox.offsetLeft - oFloatbox.offsetWidth/2;
+			if(iLeft>oSmallbox.offsetWidth - oFloatbox.offsetWidth){
+				iLeft = oSmallbox.offsetWidth - oFloatbox.offsetWidth;
+			}
+			if(iLeft<0){
+				iLeft = 0;
+			}
+			if(iTop > oSmallbox.offsetHeight - oFloatbox.offsetHeight){
+				iTop = oSmallbox.offsetHeight - oFloatbox.offsetHeight;
+			}
+			if(iTop < 0){
+				iTop = 0;
+			}
+
+			oFloatbox.style.left = iLeft +'px';
+			oFloatbox.style.top = iTop +'px';
+
+			var fLeft = iLeft / (oSmallbox.offsetWidth - oFloatbox.offsetWidth);
+			var fTop = iTop / (oSmallbox.offsetHeight - oFloatbox.offsetHeight);
+
+			oBigpic.style.left = -(oBigpic.offsetWidth - oBigbox.offsetWidth) * fLeft +'px';
+			oBigpic.style.top = -(oBigpic.offsetHeight - oBigbox.offsetHeight) * fTop +'px';
+		}
+	</script>
+</body>
+</html> 

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<nav id="nav">
+		<ul>
+			<li><a href="#sec1">link 1</a></li>
+			<li><a href="#sec2">link 2</a></li>
+			<li><a href="#sec3"></a></li>
+		</ul>
+	</nav>
+	<script>
+	$(function(){
+		$('#nav a').on('click', function(){
+			var hash = this.href.substr(this.href.indexOf('#'));
+			var iTop = $(hash).offset().top;
+			$(document.body).animate({
+				scrollTop:iTop
+			});
+			history.pushState(iTop,'');
+
+			return false;
+		});
+		window.onpopstate = function(e){
+			$(document.body).animate({
+				scrollTop: e.state;
+			});
+		};
+	});
+	</script>
+</body>
+</html>
